@@ -4,8 +4,8 @@ namespace App\Entity;
 
 use App\Repository\MessageRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
 class Message
@@ -15,6 +15,8 @@ class Message
     #[ORM\Column]
     private int $id;
 
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 2500)]
     #[ORM\Column(type: "text")]
     private string $message;
 
