@@ -56,9 +56,9 @@ class MessageService
         return $message ? $this->formatMessage($message) : null;
     }
 
-    public function getAndSortMessagesByUuidAndCreationTime(?Uuid $uuid, ?\DateTimeImmutable $createdAt, ?string $orderByUuid, ?string $orderByDate): array
+    public function getAndSortMessagesByUuidAndCreationTime(?string $orderByUuid, ?string $orderByDate): array
     {
-        $messages = $this->messageRepository->findByUuidAndCreationTime($uuid, $createdAt, $orderByUuid, $orderByDate);
+        $messages = $this->messageRepository->findByUuidAndCreationTime($orderByUuid, $orderByDate);
 
         return array_map(function (Message $message) {
             return $this->formatMessage($message);

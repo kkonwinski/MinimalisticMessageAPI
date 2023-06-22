@@ -40,36 +40,22 @@ class MessageRepository extends ServiceEntityRepository
         }
     }
 
-    public function findByUuidAndCreationTime(?Uuid $uuid, ?\DateTimeImmutable $creationTime, $orderByUuid, $orderByDate): array
+    public function findByUuidAndCreationTime($orderByUuid, $orderByDate): array
     {
         $queryBuilder = $this->createQueryBuilder('m');
 
-        if ($uuid) {
-            $queryBuilder
-                ->andWhere('m.uuid = :uuid')
-                ->setParameter('uuid', $uuid);
-        }
+        if ($orderByUuid || $orderByDate) {
+            if ($orderByUuid === 'asc') {
+                $queryBuilder->addOrderBy('m.uuid', 'ASC');
+            } elseif ($orderByUuid === 'desc') {
+                $queryBuilder->addOrderBy('m.uuid', 'DESC');
+            }
 
-        if ($creationTime) {
-            $queryBuilder
-                ->andWhere('m.createdAt = :creationTime')
-                ->setParameter('creationTime', $creationTime);
-        }
-
-        if ($orderByUuid === 'asc') {
-            $queryBuilder->addOrderBy('m.uuid', 'ASC');
-        } elseif ($orderByUuid === 'desc') {
-            $queryBuilder->addOrderBy('m.uuid', 'DESC');
-        } else {
-            $queryBuilder->addOrderBy('m.uuid', 'ASC');
-        }
-
-        if ($orderByDate === 'asc') {
-            $queryBuilder->addOrderBy('m.createdAt', 'ASC');
-        } elseif ($orderByDate === 'desc') {
-            $queryBuilder->addOrderBy('m.createdAt', 'DESC');
-        } else {
-            $queryBuilder->addOrderBy('m.createdAt', 'DESC');
+            if ($orderByDate === 'asc') {
+                $queryBuilder->addOrderBy('m.createdAt', 'ASC');
+            } elseif ($orderByDate === 'desc') {
+                $queryBuilder->addOrderBy('m.createdAt', 'DESC');
+            }
         }
 
         return $queryBuilder->getQuery()->getResult();

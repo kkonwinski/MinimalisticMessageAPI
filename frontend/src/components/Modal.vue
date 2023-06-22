@@ -7,7 +7,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content" style="cursor: auto">
         <div class="modal-header">
-          <h5 class="modal-title">Message: {{message.uuid}}</h5>
+          <h5 class="modal-title">Message: {{ message.uuid }}</h5>
           <button
             type="button"
             class="btn-close"

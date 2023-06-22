@@ -47,17 +47,11 @@ class MessageController extends AbstractController
     #[Route('/message/list', name: 'message_list', methods: ['GET'])]
     public function listMessage(Request $request): JsonResponse
     {
-        $uuid = $request->query->get('uuid');
-        $uuidObj = $uuid ? Uuid::fromString($uuid) : null;
-
-        $createdAt = $request->query->get('createdAt');
-        $createdAtObj = $createdAt ? \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $createdAt) : null;
-
         $orderByUuid = $request->query->get('orderByUuid');
         $orderByDate = $request->query->get('orderByDate');
 
-        $messages = $this->messageService->getAndSortMessagesByUuidAndCreationTime($uuidObj, $createdAtObj, $orderByUuid, $orderByDate);
 
+        $messages = $this->messageService->getAndSortMessagesByUuidAndCreationTime($orderByUuid, $orderByDate);
         return new JsonResponse($messages, JsonResponse::HTTP_OK);
     }
 
@@ -65,10 +59,6 @@ class MessageController extends AbstractController
     public function getMessageByUuid(string $uuid): JsonResponse
     {
         $message = $this->messageService->getMessageByUuid($uuid);
-
-        if (!$message) {
-            return new JsonResponse('Message not found', JsonResponse::HTTP_NOT_FOUND);
-        }
 
         return new JsonResponse($message, JsonResponse::HTTP_OK);
     }
