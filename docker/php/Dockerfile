@@ -8,7 +8,7 @@ RUN apt update \
     && docker-php-ext-configure zip \
     && docker-php-ext-install zip
 
-WORKDIR /var/www/website_app
+WORKDIR /var/www/minimalistic_message_api
 
 
 # create docker sudo user
