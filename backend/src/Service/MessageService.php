@@ -22,7 +22,7 @@ class MessageService
         $this->entityManager = $entityManager;
     }
 
-    public function createMessage(string $messageText): array
+    public function createAndStoreMessage(string $messageText): array
     {
         $message = new Message($messageText);
         $errors = $this->validator->validate($message);
@@ -35,8 +35,7 @@ class MessageService
             return ['error' => $errorMessages];
         }
 
-        $this->entityManager->persist($message);
-        $this->entityManager->flush();
+        $this->messageRepository->save($message, true);
 
         $this->messageFile->store($messageText);
         return ['uuid' => (string)$message->getUuid()];
@@ -57,15 +56,15 @@ class MessageService
         return $message ? $this->formatMessage($message) : null;
     }
 
-    public function getMessagesByUuidAndCreationTime(string $uuid, string $createdAt): array
+    public function getAndSortMessagesByUuidAndCreationTime(?Uuid $uuid, ?\DateTimeImmutable $createdAt, ?string $orderByUuid, ?string $orderByDate): array
     {
-        $uuidObj = Uuid::fromString($uuid);
-        $createdAtObj = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $createdAt);
-        $messages = $this->messageRepository->findByUuidAndCreationTime($uuidObj, $createdAtObj);
+        $messages = $this->messageRepository->findByUuidAndCreationTime($uuid, $createdAt, $orderByUuid, $orderByDate);
+
         return array_map(function (Message $message) {
             return $this->formatMessage($message);
-        }, (array)$messages);
+        }, $messages);
     }
+
 
     private function formatMessage(Message $message): array
     {
