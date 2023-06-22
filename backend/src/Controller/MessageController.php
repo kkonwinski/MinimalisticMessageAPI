@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Service\MessageService;
-use HttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/api', name: 'api_')]
 class MessageController extends AbstractController
@@ -38,10 +39,9 @@ class MessageController extends AbstractController
         $result = $this->messageService->createAndStoreMessage($messageText);
 
         if (isset($result['error'])) {
-            return new JsonResponse($result['error'], JsonResponse::HTTP_UNPROCESSABLE_ENTITY);
+            return new JsonResponse($result['error'], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-
-        return new JsonResponse(['message' => $result['uuid']], JsonResponse::HTTP_OK);
+        return new JsonResponse(['message' => $result['uuid']], JsonResponse::HTTP_CREATED);
     }
 
     #[Route('/message/list', name: 'message_list', methods: ['GET'])]
