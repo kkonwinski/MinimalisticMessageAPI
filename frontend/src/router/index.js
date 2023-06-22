@@ -1,5 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import MessageListView from '../views/MessageListView.vue'
+import MessageFormView from '../views/MessageFormView.vue'
+// import MessageDetailView from '../views/MessageDetailView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,11 +15,24 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
-    }
+    },
+    {
+      path: '/messages',
+      name: 'messages',
+      component: MessageListView
+    },
+    {
+      path: '/add-message',
+      name: 'add-message',
+      component: MessageFormView
+    },
+    // {
+    //   path: '/message/:id',
+    //   name: 'message-detail',
+    //   component: MessageDetailView,
+    //   props: true
+    // }
   ]
 })
 
