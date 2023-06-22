@@ -1,11 +1,8 @@
 FROM node:lts-alpine
 
-RUN npm install -g http-server
-
+# make the 'app' folder the current working directory
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
 COPY . .
-
+RUN npm install
 ENTRYPOINT [ "npm", "run", "dev" ]
 # CMD [ "http-server", "dist", "-p","8082" ]
