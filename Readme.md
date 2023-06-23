@@ -14,7 +14,7 @@ Minimalistic Message API to prosty i minimalistyczny projekt API oparty na Symfo
 - POST /api/message/add: Dodaje nową wiadomość. Oczekuje pola "message" w ciele żądania.
 - GET /api/messages: Zwraca wszystkie wiadomości.
 - GET /api/message/list/{uuid}: Zwraca wiadomość o danym UUID.
-- GET /api/message/list/{uuid}/{createdAt}: Zwraca wiadomości o danym UUID i dacie utworzenia.
+- GET /api/message/list/{uuid}/{createdAt}: Zwraca wiadomości posortowane uuid i/lub daty utworzenia.
 
 ## Aplikacja frontendowa
 
