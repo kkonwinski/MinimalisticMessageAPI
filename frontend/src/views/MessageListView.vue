@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="my-3 d-flex justify-content-end">
+      <router-link to="/send-message">
+        <button type="button" class="btn btn-outline-primary">Send New Message</button>
+      </router-link>
+    </div>
     <div class="d-flex justify-content-end">
       <div class="px-4">
         <button @click="sortMessages('uuid')" class="btn btn-warning">

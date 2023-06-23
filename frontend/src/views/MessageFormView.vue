@@ -1,5 +1,10 @@
 <template>
   <div>
+    <div class="my-3 d-flex justify-content-end">
+      <router-link to="/message-list">
+        <button type="button" class="btn btn-outline-primary">Go to Message List</button>
+      </router-link>
+    </div>
     <div v-if="alert.show" :class="`alert alert-${alert.type}`" role="alert">
       {{ alert.message }}
     </div>
@@ -9,6 +14,7 @@
             class="form-control"
             v-model="content"
             placeholder="Message content"
+            style="min-height: 250px;"
         ></textarea>
       </div>
       <button type="submit" class="btn btn-primary">Send</button>
