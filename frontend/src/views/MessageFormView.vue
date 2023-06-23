@@ -33,6 +33,9 @@ export default {
   methods: {
     async send() {
       try {
+        if (!this.content || this.content.length > 2500) {
+          throw new Error("Invalid content length");
+        }
         const formData = new FormData();
         formData.append('message', this.content);
         const response = await axios.post("http://0.0.0.0:8080/api/message/add", formData);
@@ -47,11 +50,7 @@ export default {
       } catch (error) {
         this.alert.show = true;
         this.alert.type = "danger";
-        if (error.response && error.response.data.message) {
-          this.alert.message = error.response.data.message.join(' ');
-        } else {
-          this.alert.message = "An error occurred while sending the message.";
-        }
+        this.alert.message = error.message || "We can't send message, try send message later";
       }
     },
   },

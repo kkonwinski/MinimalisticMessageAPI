@@ -1,28 +1,23 @@
-import { createRouter, createWebHistory } from "vue-router";
-import MessageListView from "../views/MessageListView.vue";
-import MessageFormView from "../views/MessageFormView.vue";
-// import MessageDetailView from '../views/MessageDetailView.vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import MessageListView from '../views/MessageListView.vue'
+import MessageFormView from '../views/MessageFormView.vue'
+
+const routes = [
+  {
+    path: '/message-list',
+    name: 'MessageList',
+    component: MessageListView
+  },
+  {
+    path: '/send-message',
+    name: 'SendMessage',
+    component: MessageFormView
+  }
+]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: "/messages",
-      name: "messages",
-      component: MessageListView,
-    },
-    {
-      path: "/add-message",
-      name: "add-message",
-      component: MessageFormView,
-    },
-    // {
-    //   path: '/message/:id',
-    //   name: 'message-detail',
-    //   component: MessageDetailView,
-    //   props: true
-    // }
-  ],
-});
+  history: createWebHistory('/'),
+  routes
+})
 
-export default router;
+export default router
